@@ -1,6 +1,5 @@
 # Standard
 import sys
-import json
 import logging
 import re
 import datetime
@@ -559,18 +558,3 @@ def define_elastic_path(elastic_user, elastic_pass, elastic_protocol, elastic_po
     '''
     elastic_path = elastic_protocol + '://' + elastic_user + ':' + elastic_pass + '@' + elastic_adress + ':' + elastic_port
     return elastic_path
-
-def load_json(json_file):
-    with open(json_file) as file:
-        decoded_json = json.load(file)
-    
-    return decoded_json
-
-def load_terms_to_follow(terms_file_path):
-    '''
-    We need to feed a list of all the terms to the stream filter
-    '''
-    terms_file = load_json(terms_file_path)
-    list_of_terms = [word for group in terms_file for word in terms_file[group]]
-
-    return list_of_terms

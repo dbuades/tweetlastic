@@ -1,3 +1,6 @@
 /config
 /docker
 /log
+plan.txt
+.vscode
+test.py
