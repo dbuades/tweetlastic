@@ -3,15 +3,23 @@ import logging
 import tweepy
 import yaml
 
-from aux_functions import CustomStream, start_stream, create_index, define_twitter_credentials, define_elastic_path, set_logging_level
+from aux_functions import CustomStream, start_stream, create_index, set_logging_level, set_twitter_auth, set_elastic_path
 
 ### Load .yaml file with settings
 with open("./config/settings.yaml", "r") as file:
   settings = yaml.safe_load(file)
 
-## Load.yaml file with terms to follow in the twitter stream
+## Load .yaml file with terms to follow in the twitter stream
 with open(settings["terms_file_path"], "r") as file:
   terms_to_follow = yaml.safe_load(file)
+
+## Load .yaml file with twitter credentials
+with open(settings["twitter_credentials_path"], "r") as file:
+  twitter_credentials = yaml.safe_load(file)
+
+## Load .ymal file with elastic_credentials
+with open(settings["elastic_credentials_path"], "r") as file:
+  elastic_credentials = yaml.safe_load(file)
 
 ### Start logging
 logging_level = set_logging_level(settings["logging_level"])
@@ -19,19 +27,17 @@ logging.basicConfig(level = logging_level, filename=settings["log_name"], format
 logging.info('Executing script...')
 
 ### Define ElasticSearch connection
-elastic_path = define_elastic_path(**settings["elastic_credentials"])
-# elastic_path = settings["elastic_path"]
+elastic_path = set_elastic_path(elastic_credentials)
 es = elasticsearch.Elasticsearch(elastic_path)
 # Reduce elastic logging level to Warning (otherwise, in INFO, it logs every time a tweet is saved)
 es_logger = logging.getLogger('elasticsearch')
 es_logger.setLevel(logging.WARNING)
-
-### Create ElasticSearch index if it doesn't exist
+# Create ElasticSearch index if it doesn't exist
 if not es.indices.exists(index=settings["elastic_index_name"]):
     create_index(es, settings["elastic_index_name"])
 
 ### Initiate the stream
-auth = define_twitter_credentials(**settings["twitter_credentials"])
+auth = set_twitter_auth(twitter_credentials)
 myStreamListener = CustomStream(es, settings["elastic_index_name"], settings["logging_level"], api=None)
 myStream = tweepy.Stream(auth = auth, listener=myStreamListener)
 

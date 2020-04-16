@@ -513,13 +513,6 @@ def define_index_template():
     return template
 
 
-def define_twitter_credentials(consumer_key, consumer_secret, access_token, access_token_secret):
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
-
-    return auth
-
-
 def create_index(es, index_name):
     '''
     Create ElasticSearch index for saving the tweets
@@ -552,9 +545,21 @@ def set_logging_level(logging_level):
     return logging_level
 
 
-def define_elastic_path(elastic_user, elastic_pass, elastic_protocol, elastic_port, elastic_adress):
+## Credentials management
+
+def set_twitter_auth(parameters):
+    auth = tweepy.OAuthHandler(parameters["consumer_key"], parameters["consumer_secret"])
+    auth.set_access_token(parameters["access_token"], parameters["access_token_secret"])
+
+    return auth
+
+
+def set_elastic_path(parameters):
     '''
     Set the path for connecting to the ElasticSearch database
     '''
-    elastic_path = elastic_protocol + '://' + elastic_user + ':' + elastic_pass + '@' + elastic_adress + ':' + elastic_port
-    return elastic_path
+    return parameters["protocol"]           \
+      + '://' + parameters["elastic_user"]  \
+      + ':' + parameters["elastic_pass"]    \
+      + '@' + parameters["elastic_adress"]  \
+      + ':' + parameters["elastic_port"]
