@@ -41,7 +41,7 @@ jobs:
             
             - name: Verify that the variables can be accessed
               run: |
-                python -c {import os; print(os.getenv('ELASTIC_PROTOCOL'))}
+                python -c "import os; print(os.getenv('ELASTIC_PROTOCOL'))"
 
             - name: Run pytest
               run: |
