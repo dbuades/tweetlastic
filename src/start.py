@@ -3,7 +3,8 @@ import logging
 import tweepy
 import yaml
 
-from aux_functions import CustomStream, start_stream, create_index, set_logging_level, set_twitter_auth, set_elastic_path
+from authentication import set_elastic_path, set_twitter_auth
+from aux_functions import CustomStream, start_stream, create_index, set_logging_level
 
 ### Load .yaml file with general settings
 with open("./config/settings.yaml", "r") as file:
