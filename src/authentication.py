@@ -25,10 +25,10 @@ def set_elastic_path():
     '''
 
     ELASTIC_PROTOCOL = os.getenv('ELASTIC_PROTOCOL')
-    ELASTIC_ADRESS = os.getenv('ELASTIC_ADRESS')
+    ELASTIC_ADDRESS = os.getenv('ELASTIC_ADDRESS')
     ELASTIC_PORT = os.getenv('ELASTIC_PORT')
 
     ELASTIC_USER = os.getenv('ELASTIC_USER')
     ELASTIC_PASS = os.getenv('ELASTIC_PASS')
 
-    return ELASTIC_PROTOCOL + '://' + ELASTIC_USER + ':' + ELASTIC_PASS + '@' + ELASTIC_ADRESS + ':' + ELASTIC_PORT
+    return ELASTIC_PROTOCOL + '://' + ELASTIC_USER + ':' + ELASTIC_PASS + '@' + ELASTIC_ADDRESS + ':' + ELASTIC_PORT

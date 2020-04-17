@@ -1,10 +1,10 @@
 # Standard
-import os
 import sys
 import logging
 import re
 import datetime
 import time
+
 # Extra
 import elasticsearch
 import tweepy
