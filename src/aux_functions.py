@@ -1,4 +1,5 @@
 # Standard
+import os
 import sys
 import logging
 import re
@@ -547,19 +548,33 @@ def set_logging_level(logging_level):
 
 ## Credentials management
 
-def set_twitter_auth(parameters):
-    auth = tweepy.OAuthHandler(parameters["consumer_key"], parameters["consumer_secret"])
-    auth.set_access_token(parameters["access_token"], parameters["access_token_secret"])
+def set_twitter_auth():
+    '''
+    Set the credentials for connecting to the Twitter API
+    '''
+
+    TWITTER_CONSUMER_KEY = os.getenv('TWITTER_CONSUMER_KEY')
+    TWITTER_CONSUMER_SECRET = os.getenv('TWITTER_CONSUMER_SECRET')
+
+    TWITTER_ACCESS_TOKEN = os.getenv('TWITTER_ACCESS_TOKEN')
+    TWITTER_ACCESS_TOKEN_SECRET = os.getenv('TWITTER_ACCESS_TOKEN_SECRET')
+
+    auth = tweepy.OAuthHandler(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
+    auth.set_access_token(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
 
     return auth
 
 
-def set_elastic_path(parameters):
+def set_elastic_path():
     '''
-    Set the path for connecting to the ElasticSearch database
+    Set the path for connecting to the ElasticSearch DB
     '''
-    return parameters["protocol"]           \
-      + '://' + parameters["elastic_user"]  \
-      + ':' + parameters["elastic_pass"]    \
-      + '@' + parameters["elastic_adress"]  \
-      + ':' + parameters["elastic_port"]
+
+    ELASTIC_PROTOCOL = os.getenv('ELASTIC_PROTOCOL')
+    ELASTIC_ADRESS = os.getenv('ELASTIC_ADRESS')
+    ELASTIC_PORT = os.getenv('ELASTIC_PORT')
+
+    ELASTIC_USER = os.getenv('ELASTIC_USER')
+    ELASTIC_PASS = os.getenv('ELASTIC_PASS')
+
+    return ELASTIC_PROTOCOL + '://' + ELASTIC_USER + ':' + ELASTIC_PASS + '@' + ELASTIC_ADRESS + ':' + ELASTIC_PORT

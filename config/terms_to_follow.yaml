@@ -1,0 +1,9 @@
+## Set the terms (or accounts) that we want to track.
+## By default, let's track some ML conferences
+
+- "@NeurIPSConf"
+- "@icmlconf"
+- "@iclr_conf"
+- "@CVPR"
+- "@aclmeeting"
+- "@RealAAAI"

@@ -1,0 +1,11 @@
+# General settings required by the application
+
+terms_file_path : "./config/terms_to_follow.yaml"
+elastic_index_name : "tweepy_MLconferences" 
+
+logging_level : INFO
+log_name : "tweepy_MLconferences.log"
+
+reconnect_stream :
+    hours_to_reset_counter : "2"
+    max_reconnects : "20"

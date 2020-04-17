@@ -5,21 +5,13 @@ import yaml
 
 from aux_functions import CustomStream, start_stream, create_index, set_logging_level, set_twitter_auth, set_elastic_path
 
-### Load .yaml file with settings
+### Load .yaml file with general settings
 with open("./config/settings.yaml", "r") as file:
   settings = yaml.safe_load(file)
 
-## Load .yaml file with terms to follow in the twitter stream
+### Load .yaml file with terms to follow in the twitter stream
 with open(settings["terms_file_path"], "r") as file:
   terms_to_follow = yaml.safe_load(file)
-
-## Load .yaml file with twitter credentials
-with open(settings["twitter_credentials_path"], "r") as file:
-  twitter_credentials = yaml.safe_load(file)
-
-## Load .ymal file with elastic_credentials
-with open(settings["elastic_credentials_path"], "r") as file:
-  elastic_credentials = yaml.safe_load(file)
 
 ### Start logging
 logging_level = set_logging_level(settings["logging_level"])
@@ -27,7 +19,7 @@ logging.basicConfig(level = logging_level, filename=settings["log_name"], format
 logging.info('Executing script...')
 
 ### Define ElasticSearch connection
-elastic_path = set_elastic_path(elastic_credentials)
+elastic_path = set_elastic_path()
 es = elasticsearch.Elasticsearch(elastic_path)
 # Reduce elastic logging level to Warning (otherwise, in INFO, it logs every time a tweet is saved)
 es_logger = logging.getLogger('elasticsearch')
@@ -37,7 +29,7 @@ if not es.indices.exists(index=settings["elastic_index_name"]):
     create_index(es, settings["elastic_index_name"])
 
 ### Initiate the stream
-auth = set_twitter_auth(twitter_credentials)
+auth = set_twitter_auth()
 myStreamListener = CustomStream(es, settings["elastic_index_name"], settings["logging_level"], api=None)
 myStream = tweepy.Stream(auth = auth, listener=myStreamListener)
 
