@@ -4,3 +4,7 @@
 plan.txt
 .vscode
 test.py
+__pycache__
+.python-version
+.env
+testing.py
