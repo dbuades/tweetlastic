@@ -1,10 +1,16 @@
-/secrets
+# VSCode files
+.vscode
+.env
+
+# Cache
+__pycache__
+.pytest_cache
+
+# Virtualenv file
+.python-version
+
+# Extra files, not needed
 /docker
 /log
+/secrets
 plan.txt
-.vscode
-test.py
-__pycache__
-.python-version
-.env
-testing.py
