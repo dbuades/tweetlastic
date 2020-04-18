@@ -17,15 +17,15 @@ with open(settings["terms_file_path"], "r") as file:
 ### Start logging
 logging_level = set_logging_level(settings["logging_level"])
 logging.basicConfig(level = logging_level, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
-
+# If logging_level != DEBUG, reduce elastic logging level to Warning (otherwise, in INFO, it logs every time a tweet is saved)
+if settings["logging_level"] != "DEBUG":
+  es_logger = logging.getLogger('elasticsearch')
+  es_logger.setLevel(logging.WARNING)
 logging.info('Executing script...')
 
 ### Define ElasticSearch connection
 elastic_path = set_elastic_path()
 es = elasticsearch.Elasticsearch(elastic_path)
-# Reduce elastic logging level to Warning (otherwise, in INFO, it logs every time a tweet is saved)
-es_logger = logging.getLogger('elasticsearch')
-es_logger.setLevel(logging.WARNING)
 # Create ElasticSearch index if it doesn't exist
 if not es.indices.exists(index=settings["elastic_index_name"]):
     create_index(es, settings["elastic_index_name"])
