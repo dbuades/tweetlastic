@@ -1,6 +1,6 @@
 # VSCode files
 .vscode
-.env
+*.env
 
 # Cache
 __pycache__

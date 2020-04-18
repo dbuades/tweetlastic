@@ -1,10 +1,10 @@
 # General settings required by the application
 
 terms_file_path : "./config/terms_to_follow.yaml"
-elastic_index_name : "tweepy_MLconferences" 
+elastic_index_name : "ml_conferences" 
 
 logging_level : INFO
-log_name : "tweepy_MLconferences.log"
+log_name : "ml_conferences.log"
 
 reconnect_stream :
     hours_to_reset_counter : "2"
