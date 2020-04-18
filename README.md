@@ -1,1 +1,1 @@
-![](https://github.com/dbuades/tweepy/workflows/run_tests/badge.svg?branch=master)
+![](https://github.com/dbuades/tweepy/actions)
