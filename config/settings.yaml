@@ -4,7 +4,6 @@ terms_file_path : "./config/terms_to_follow.yaml"
 elastic_index_name : "ml_conferences" 
 
 logging_level : INFO
-log_name : "ml_conferences.log"
 
 reconnect_stream :
     hours_to_reset_counter : "2"

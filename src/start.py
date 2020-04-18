@@ -16,7 +16,8 @@ with open(settings["terms_file_path"], "r") as file:
 
 ### Start logging
 logging_level = set_logging_level(settings["logging_level"])
-logging.basicConfig(level = logging_level, filename=settings["log_name"], format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+logging.basicConfig(level = logging_level, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+
 logging.info('Executing script...')
 
 ### Define ElasticSearch connection
