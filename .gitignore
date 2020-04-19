@@ -10,7 +10,6 @@ __pycache__
 .python-version
 
 # Extra files, not needed
-/docker
 /log
 /secrets
 plan.txt

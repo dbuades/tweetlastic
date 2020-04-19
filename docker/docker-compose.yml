@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  tweetlastic:
+    image: dbuades/tweetlastic # Or dbuades/tweetlastic:containerless
+    restart: unless-stopped
+    container_name: tweetlastic
+    environment: 
+      # Secrets required to connect to the twitter API
+      - TWITTER_CONSUMER_KEY=foo
+      - TWITTER_CONSUMER_SECRET=foo
+      - TWITTER_ACCESS_TOKEN=foo
+      - TWITTER_ACCESS_TOKEN_SECRET=foo
+
+      # Secrets required to connect to the Elastic DB
+      - ELASTIC_PROTOCOL=bar
+      - ELASTIC_ADDRESS=bar
+      - ELASTIC_PORT=bar
+      - ELASTIC_USER=bar
+      - ELASTIC_PASS=bar
+
+    volumes:
+      - /path/to/config:/tweetlastic/config
