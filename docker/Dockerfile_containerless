@@ -23,4 +23,4 @@ COPY config /tweetlastic/config
 COPY src /tweetlastic/src
 WORKDIR /tweetlastic
 
-ENTRYPOINT ["/venv/bin/python3", "./src/start.py"]
+ENTRYPOINT ["/venv/bin/python3", "./src/main.py"]

@@ -8,4 +8,4 @@ WORKDIR /tweetlastic
 
 RUN pip install -r ./requirements.txt
 
-RUN [ "python", "./src/start.py" ]
+RUN [ "python", "./src/main.py" ]

@@ -4,7 +4,7 @@ import tweepy
 import yaml
 
 from authentication import set_elastic_path, set_twitter_auth
-from aux_functions import CustomStream, start_stream, create_index, set_logging_level
+from aux_functions import CustomStream, ElasticIndex, start_stream, set_logging_level
 
 ### Load .yaml file with general settings
 with open("./config/settings.yaml", "r") as file:
@@ -26,14 +26,14 @@ logging.info('Executing script...')
 ### Define ElasticSearch connection
 elastic_path = set_elastic_path()
 es = elasticsearch.Elasticsearch(elastic_path)
-# Create ElasticSearch index if it doesn't exist
-if not es.indices.exists(index=settings["elastic_index_name"]):
-    create_index(es, settings["elastic_index_name"])
+# Create ElasticSearch index if it doesn't exist (or force overwrite)
+ElasticIndex().create_index(es, index_name = settings["elastic_index_name"], overwrite = settings["overwrite_index"])
+
 
 ### Initiate the stream
 auth = set_twitter_auth()
 myStreamListener = CustomStream(es, settings["elastic_index_name"], settings["logging_level"], api=None)
-myStream = tweepy.Stream(auth = auth, listener=myStreamListener)
+myStream = tweepy.Stream(auth = auth, listener = myStreamListener)
 
 ### Execute the stream
 start_stream(myStream,
