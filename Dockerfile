@@ -12,15 +12,14 @@ RUN apt-get update && \
 
 # Build the virtualenv as a separate step: Only re-execute this step when requirements.txt changes
 FROM build AS build-venv
-COPY requirements.txt requirements.txt
+COPY tweetlastic/requirements.txt requirements.txt
 RUN /venv/bin/pip install --disable-pip-version-check -r /requirements.txt
 
 # Copy the virtualenv into a distroless image
 FROM gcr.io/distroless/python3-debian10
 COPY --from=build-venv /venv /venv
 
-COPY config /tweetlastic/config
-COPY src /tweetlastic/src
-WORKDIR /tweetlastic
+COPY tweetlastic /tweetlastic
+WORKDIR /
 
-ENTRYPOINT ["/venv/bin/python3", "./src/main.py"]
+ENTRYPOINT ["/venv/bin/python3", "-m", "tweetlastic.app"]

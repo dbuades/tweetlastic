@@ -1,7 +1,9 @@
 # General settings required by the application
 
-terms_file_path : "./config/terms_to_follow.yaml"
+terms_file_path : "tweetlastic/config/terms_to_follow.yaml"
+
 elastic_index_name : "ml_conferences" 
+overwrite_index : False
 
 logging_level : INFO
 

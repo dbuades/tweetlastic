@@ -2,7 +2,7 @@ version: '3'
 
 services:
   tweetlastic:
-    image: dbuades/tweetlastic # Or dbuades/tweetlastic:containerless
+    image: dbuades/tweetlastic
     restart: unless-stopped
     container_name: tweetlastic
     environment: 
@@ -20,4 +20,4 @@ services:
       - ELASTIC_PASS=bar
 
     volumes:
-      - /path/to/config:/tweetlastic/config
+      - /path/to/your/own/personalized/config:/tweetlastic/config

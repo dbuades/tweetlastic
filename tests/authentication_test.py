@@ -1,5 +1,7 @@
 import elasticsearch
-from src.authentication import set_elastic_path, set_twitter_auth
+
+from tweetlastic.utils.elastic import set_elastic_path
+from tweetlastic.utils.twitter import set_twitter_auth
 
 def test_load_credentials_from_env():
   """

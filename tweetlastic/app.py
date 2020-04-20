@@ -3,11 +3,12 @@ import logging
 import tweepy
 import yaml
 
-from authentication import set_elastic_path, set_twitter_auth
-from aux_functions import CustomStream, ElasticIndex, start_stream, set_logging_level
+from tweetlastic.utils.elastic import IndexOperations, set_elastic_path
+from tweetlastic.utils.twitter import CustomStream, start_stream, set_twitter_auth
+from tweetlastic.utils.aux import set_logging_level
 
 ### Load .yaml file with general settings
-with open("./config/settings.yaml", "r") as file:
+with open("tweetlastic/config/settings.yaml", "r") as file:
   settings = yaml.safe_load(file)
 
 ### Load .yaml file with terms to follow in the twitter stream
@@ -27,8 +28,7 @@ logging.info('Executing script...')
 elastic_path = set_elastic_path()
 es = elasticsearch.Elasticsearch(elastic_path)
 # Create ElasticSearch index if it doesn't exist (or force overwrite)
-ElasticIndex().create_index(es, index_name = settings["elastic_index_name"], overwrite = settings["overwrite_index"])
-
+IndexOperations().create_index(es, index_name = settings["elastic_index_name"], overwrite = settings["overwrite_index"])
 
 ### Initiate the stream
 auth = set_twitter_auth()
