@@ -8,7 +8,7 @@ import time
 import tweepy
 
 # Custom
-from tweetlastic.utils.elastic import elastic_parse, elastic_save
+from tweetlastic.utils.rabbitmq_producer import publish_rabbitmq
 
 class CustomStream(tweepy.StreamListener):
 
@@ -18,11 +18,11 @@ class CustomStream(tweepy.StreamListener):
     Should I initialize the Class before??
     '''
 
-    def __init__(self, es, index_name, logging_level, **kwargs):
+    def __init__(self, channel, queue_name, logging_level, **kwargs):
 
         super().__init__(**kwargs)
-        self.es = es
-        self.index_name = index_name
+        self.channel = channel
+        self.queue_name = queue_name
 
         # Debug parameters
         if logging_level == "DEBUG":
@@ -77,17 +77,17 @@ class CustomStream(tweepy.StreamListener):
         if not status.retweeted and not status.text.startswith('RT @') and not status.favorited: # Ignore RT and favorites, we just want original tweets
 
             # Parse tweet into .json object
-            json_data = status._json
+            tweet_json = status._json
 
-            # Save object to our elasticsearch DB
-            tweet=elastic_parse(json_data)
-            elastic_save(self.es, self.index_name, tweet=tweet)
+            # Send tweet to the RabbitMQ broker
+            publish_rabbitmq(channel=self.channel,
+                            queue_name=self.queue_name,
+                            tweet=tweet_json)
 
             # Debug
             if self.debug:
-                self.debug_json_list.append(json_data)
-                self.debug_save_list.append(tweet)
-                logging.debug(tweet['url'])
+                self.debug_json_list.append(tweet_json)
+                logging.debug(tweet_json)
 
 
 def start_stream(stream,

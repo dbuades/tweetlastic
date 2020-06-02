@@ -2,8 +2,7 @@
 
 terms_file_path : "tweetlastic/config/terms_to_follow.yaml"
 
-elastic_index_name : "ml_conferences" 
-overwrite_index : False
+rabbitmq_queue_name: twitter
 
 logging_level : INFO
 
