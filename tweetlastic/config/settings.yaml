@@ -1,11 +1,9 @@
-# General settings required by the application
-
-terms_file_path : "tweetlastic/config/terms_to_follow.yaml"
-
+## General settings required by the application
 rabbitmq_queue_name: twitter
-
 logging_level : INFO
 
+## Twitter
+terms_file_path : "tweetlastic/config/terms_to_follow.yaml"
 reconnect_stream :
     hours_to_reset_counter : "2"
     max_reconnects : "20"

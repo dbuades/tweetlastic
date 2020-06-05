@@ -1,5 +1,4 @@
 tweepy==3.8.0
 pyyaml==5.3.1
-elasticsearch==7.6.0
 numpy==1.18.2
 certifi
